@@ -49,6 +49,10 @@ namespace EShopDemo.Areas.Admin.Controllers
                     await image.CopyToAsync(new FileStream(name, FileMode.Create));
                     product.Image = "Images/" + image.FileName;
                 }
+                else
+                {
+                    product.Image = "Images/DefaultImage.PNG";
+                }
                 _context.Products.Add(product);
                 await _context.SaveChangesAsync();
                 TempData["successMsg"] = "Product has been save successfull";
