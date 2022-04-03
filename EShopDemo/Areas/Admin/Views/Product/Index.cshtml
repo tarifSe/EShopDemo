@@ -26,8 +26,8 @@
                 @Html.DisplayNameFor(model => model.Price)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ProductColor)
             </th>
@@ -40,7 +40,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.SpecialTag)
             </th>
-            
+
             <th></th>
             <th></th>
         </tr>
@@ -56,8 +56,8 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.Image)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.Image)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.ProductColor)
                 </td>
@@ -79,14 +79,15 @@
 </table>
 
 
-@*@section Scripts{ 
+@section Scripts{
+
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script type="text/javascript">
         $(function () {
-            var msg = '@TempData=["successMsg"]';
-            if (msg != null) {
-                alertify.success(msg);
+            var message = '@TempData["successMsg"]';
+            if (message != null) {
+                alertify.success(message);
             }
         });
     </script>
-}*@
+}
