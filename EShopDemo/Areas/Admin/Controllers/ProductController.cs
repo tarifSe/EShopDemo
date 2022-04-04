@@ -60,5 +60,23 @@ namespace EShopDemo.Areas.Admin.Controllers
             }
             return View(product);
         }
+
+        public IActionResult Edit(int? id)
+        {
+            ViewData["ProductTypesId"] = new SelectList(_context.ProductTypes.ToList(), "Id", "ProductType");
+            ViewData["SpecialTagId"] = new SelectList(_context.TagLists.ToList(), "Id", "TagName");
+
+            if (id == null)
+            {
+                NotFound();
+            }
+            var product = _context.Products.Include(c => c.ProductTypes).Include(t => t.SpecialTag)
+                .FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                NotFound();
+            }
+            return View(product);
+        }
     }
 }
