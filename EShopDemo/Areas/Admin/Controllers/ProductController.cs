@@ -78,5 +78,28 @@ namespace EShopDemo.Areas.Admin.Controllers
             }
             return View(product);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Products product, IFormFile image)
+        {
+            if (ModelState.IsValid)
+            {
+                if (image != null)
+                {
+                    var name = Path.Combine(_hostingEnvironment.WebRootPath + "/Images", Path.GetFileName(image.FileName));
+                    await image.CopyToAsync(new FileStream(name, FileMode.Create));
+                    product.Image = "Images/" + image.FileName;
+                }
+                else
+                {
+                    product.Image = "Images/DefaultImage.PNG";
+                }
+
+                _context.Products.Update(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
     }
 }
