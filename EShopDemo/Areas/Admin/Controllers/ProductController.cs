@@ -17,8 +17,8 @@ namespace EShopDemo.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private IHostingEnvironment _hostingEnvironment;
-        public ProductController(ApplicationDbContext applicationDbContext, IHostingEnvironment hostingEnvironment)
+        private IWebHostEnvironment _hostingEnvironment;
+        public ProductController(ApplicationDbContext applicationDbContext, IWebHostEnvironment hostingEnvironment)
         {
             _context = applicationDbContext;
             _hostingEnvironment = hostingEnvironment;
@@ -101,5 +101,22 @@ namespace EShopDemo.Areas.Admin.Controllers
             }
             return View(product);
         }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var productDetails = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).FirstOrDefault(p => p.Id == id);
+            if (productDetails == null)
+            {
+                return NotFound();
+            }
+            return View(productDetails);
+        }
+
+        //T-35 done
     }
 }
