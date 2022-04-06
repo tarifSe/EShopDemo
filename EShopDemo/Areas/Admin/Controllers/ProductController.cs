@@ -118,5 +118,15 @@ namespace EShopDemo.Areas.Admin.Controllers
         }
 
         //T-35 done
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var product = _context.Products.Include(p => p.ProductTypes).Include(t => t.SpecialTag).FirstOrDefault(c => c.Id == id);
+            return View(product);
+        }
     }
 }
