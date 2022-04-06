@@ -128,5 +128,23 @@ namespace EShopDemo.Areas.Admin.Controllers
             var product = _context.Products.Include(p => p.ProductTypes).Include(t => t.SpecialTag).FirstOrDefault(c => c.Id == id);
             return View(product);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id > 0)
+            {
+                var product = await _context.Products.FindAsync(id);
+
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+                TempData["successMsg"] = "Product has been Deleted!";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }

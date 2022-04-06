@@ -5,12 +5,12 @@
 }
 
 <h1 class="text-info">Delete Product</h1>
-<h3>Are you sure you want to delete this?</h3>
+<h3 class="text-danger">Are you sure you want to delete this?</h3>
 <br />
 
 
 <div class="row p-4 rounded border">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <form asp-action="Delete" enctype="multipart/form-data">
             @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
             <input type="hidden" asp-for="Id" />
@@ -56,14 +56,15 @@
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-4 ">
+                <div class="col-sm-4 ">
                     <label asp-for="IsAvailable" class="control-label"></label>
                 </div>
-                <div class="col-md-8 form-check">
-                    <input class="form-check-input" asp-for="IsAvailable" disabled="disabled" />
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <input class="form-check-input" asp-for="IsAvailable" disabled="disabled" />
+                    </div>
                 </div>
             </div>
-            
             <div class="form-group">
                 <input type="submit" value="Delete" class="btn btn-danger" />
                 <a asp-action="Index" class="btn btn-info">Cancel</a>
@@ -71,7 +72,8 @@
         </form>
     </div>
     <div class="col-md-1"></div>
-    <div class="col-md-3">
+    <div class="col-md-4">
+        <label>Image</label>
         <img src="~/@Model.Image" width="100%" alt="No Image" />
     </div>
 </div>
