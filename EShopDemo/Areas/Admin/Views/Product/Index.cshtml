@@ -16,6 +16,22 @@
 </div>
 <br />
 
+
+<form asp-action="Index">
+    <div class="row form-group ">
+        <div class="col-3">
+            <input type="text" name="largeAmount" class="form-control" placeholder="Large Amount" />
+        </div>
+        <div class="control-label">To</div>
+        <div class="col-3">
+            <input type="text" name="smallAmount" class="form-control" placeholder="Small Amount" />
+        </div>
+        <div class="">
+            <input type="submit" class="btn btn-secondary" value="Search Product" />
+        </div>
+    </div>
+</form>
+
 <table class="table table-striped border">
     <thead>
         <tr class="table-info">

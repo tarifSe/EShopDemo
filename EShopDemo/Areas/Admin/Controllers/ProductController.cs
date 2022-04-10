@@ -30,6 +30,19 @@ namespace EShopDemo.Areas.Admin.Controllers
             return View(products);
         }
 
+        [HttpPost]
+        public IActionResult Index(decimal largeAmount, decimal smallAmount)
+        {
+            var products = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).ToList();
+            if (largeAmount > 0 && smallAmount > 0)
+            {
+                products = products.Where(p => p.Price <= largeAmount && p.Price >= smallAmount).ToList();
+            }
+            //var products = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).Where(p => p.Price <= largeAmount && p.Price >= smallAmount).ToList();
+            
+            return View(products);
+        }
+
         public IActionResult Create()
         {
             ViewData["ProductTypesId"] = new SelectList(_context.ProductTypes.ToList(), "Id", "ProductType");
