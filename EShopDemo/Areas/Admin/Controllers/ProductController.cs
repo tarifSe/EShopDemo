@@ -26,8 +26,10 @@ namespace EShopDemo.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            bool onOff = true;
             var products = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).ToList();
-            ViewBag.result = products.Count;
+            onOff = false;
+            ViewBag.Status = onOff;
             return View(products);
         }
 
@@ -35,15 +37,17 @@ namespace EShopDemo.Areas.Admin.Controllers
         public IActionResult Index(decimal largeAmount, decimal smallAmount)
         {
             var products = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).ToList();
+            bool onOff = false;
             if (largeAmount > 0 && smallAmount > 0)
             {
                 products = products.Where(p => p.Price <= largeAmount && p.Price >= smallAmount).ToList();
+                onOff = true;
             }
             //var products = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).Where(p => p.Price <= largeAmount && p.Price >= smallAmount).ToList();
 
             ViewBag.text1 = largeAmount;
             ViewBag.text2 = smallAmount;
-            ViewBag.result = products.Count;
+            ViewBag.Status = onOff;
             return View(products);
         }
 

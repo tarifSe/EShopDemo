@@ -10,8 +10,9 @@
     <div class="col-6">
         <h2 class="text-info">Product List</h2>
     </div>
-    <div class="col-6 text-right">
-        <a asp-action="Create" class="btn btn-primary"><i class="fa-regular fa-plus"></i> &nbsp; New Product</a>
+    <div class="col-4"></div>
+    <div class="col-2 text-right">
+        <a asp-action="Create" class="btn btn-primary btn-block"><i class="fa-regular fa-plus"></i> &nbsp; New Product</a>
     </div>
 </div>
 <br />
@@ -22,15 +23,20 @@
         <div class="col-3">
             <input type="text" name="largeAmount" class="form-control" value="@ViewBag.text1" placeholder="Large Amount" />
         </div>
-        <div class="control-label">To</div>
         <div class="col-3">
             <input type="text" name="smallAmount" class="form-control" value="@ViewBag.text2" placeholder="Small Amount" />
         </div>
-        <div class="col-2">
-            <input type="submit" class="btn btn-secondary" value="Search Product" />
+        <div class="col-1">
+            <input type="submit" class="btn btn-secondary" value="Search" />
         </div>
-        <div class="text-left">
-            <h5 class="text-success">Total @ViewBag.result result found.</h5>
+        <div class="col-3">
+            <h5 class="text-success"><i>Total @Model.Count() result found.</i></h5>
+        </div>
+        <div class="col-2 text-right">
+            @if (ViewBag.Status)
+            {
+                <a asp-action="Index" class="btn btn-info btn-block">See All</a>
+            }
         </div>
     </div>
 </form>
