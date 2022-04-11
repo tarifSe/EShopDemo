@@ -27,6 +27,7 @@ namespace EShopDemo.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var products = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).ToList();
+            ViewBag.result = products.Count;
             return View(products);
         }
 
@@ -39,7 +40,10 @@ namespace EShopDemo.Areas.Admin.Controllers
                 products = products.Where(p => p.Price <= largeAmount && p.Price >= smallAmount).ToList();
             }
             //var products = _context.Products.Include(c => c.ProductTypes).Include(d => d.SpecialTag).Where(p => p.Price <= largeAmount && p.Price >= smallAmount).ToList();
-            
+
+            ViewBag.text1 = largeAmount;
+            ViewBag.text2 = smallAmount;
+            ViewBag.result = products.Count;
             return View(products);
         }
 

@@ -20,14 +20,17 @@
 <form asp-action="Index">
     <div class="row form-group ">
         <div class="col-3">
-            <input type="text" name="largeAmount" class="form-control" placeholder="Large Amount" />
+            <input type="text" name="largeAmount" class="form-control" value="@ViewBag.text1" placeholder="Large Amount" />
         </div>
         <div class="control-label">To</div>
         <div class="col-3">
-            <input type="text" name="smallAmount" class="form-control" placeholder="Small Amount" />
+            <input type="text" name="smallAmount" class="form-control" value="@ViewBag.text2" placeholder="Small Amount" />
         </div>
-        <div class="">
+        <div class="col-2">
             <input type="submit" class="btn btn-secondary" value="Search Product" />
+        </div>
+        <div class="text-left">
+            <h5 class="text-success">Total @ViewBag.result result found.</h5>
         </div>
     </div>
 </form>
@@ -35,6 +38,7 @@
 <table class="table table-striped border" id="productTable">
     <thead>
         <tr class="table-info">
+            <th>Sl/No</th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -59,9 +63,13 @@
         </tr>
     </thead>
     <tbody>
+        @{ var sl = 1;}
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @(sl++)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
