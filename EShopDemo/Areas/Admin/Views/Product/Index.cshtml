@@ -63,9 +63,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.SpecialTagId)
             </th>
-            <th>
-                Action
-            </th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -99,6 +98,7 @@
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="fa fa-list"></i></a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
                 </td>
+                <td></td>
             </tr>
         }
     </tbody>
@@ -106,18 +106,23 @@
 
 
 @section Scripts{
-
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('#productTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf', 'excel', 'print'
+                ]
+
+            });
+        });
+
         $(function () {
             var message = '@TempData["successMsg"]';
             if (message != null) {
                 alertify.success(message);
             }
-        });
-
-        $(document).ready(function () {
-            $('#productTable').DataTable();
         });
     </script>
 }
