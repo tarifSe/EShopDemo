@@ -1,5 +1,7 @@
-﻿using EShopDemo.Models;
+﻿using EShopDemo.Data;
+using EShopDemo.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,16 +14,22 @@ namespace EShopDemo.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _context;
+        public HomeController(ApplicationDbContext applicationDbContext)
         {
-            _logger = logger;
+            _context = applicationDbContext;
         }
+
+        //private readonly ILogger<HomeController> _logger;
+        //public HomeController(ILogger<HomeController> logger)
+        //{
+        //    _logger = logger;
+        //}
 
         public IActionResult Index()
         {
-            return View();
+            var products = _context.Products.Include(c => c.ProductTypes).Include(c => c.SpecialTag).ToList();
+            return View(products);
         }
 
         public IActionResult Privacy()
