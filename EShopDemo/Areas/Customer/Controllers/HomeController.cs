@@ -32,6 +32,24 @@ namespace EShopDemo.Controllers
             return View(products);
         }
 
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var productDetails = _context.Products.Include(c => c.ProductTypes).FirstOrDefault(p => p.Id == id);
+            if (productDetails == null)
+            {
+                return NotFound();
+            }
+            return View(productDetails);
+        }
+
+
+
+
         public IActionResult Privacy()
         {
             return View();
