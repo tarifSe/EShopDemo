@@ -1,5 +1,6 @@
 ﻿using EShopDemo.Data;
 using EShopDemo.Models;
+using EShopDemo.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -47,7 +48,31 @@ namespace EShopDemo.Controllers
             return View(productDetails);
         }
 
+        [HttpPost]
+        [ActionName("Details")]
+        public IActionResult ProductDetails(int? id)
+        {
+            List<Products> products = new List<Products>();
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var product = _context.Products.Include(c => c.ProductTypes).FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            products = HttpContext.Session.Get<List<Products>>("products");
+            if (products == null)
+            {
+                products = new List<Products>();
+            }
+            products.Add(product);
+            HttpContext.Session.Set("products", products);
+
+            return View(product);
+        }
 
 
         public IActionResult Privacy()

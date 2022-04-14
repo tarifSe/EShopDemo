@@ -1,4 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using EShopDemo.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor contextAccessor
+@{ 
+    int count = 0;
+    List<Products> products = contextAccessor.HttpContext.Session.Get<List<Products>>("products");
+    if (products == null)
+    {
+        products = new List<Products>();
+    }
+    count = products.Count;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -36,6 +49,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Product" asp-action="Index">
+                                <i class="fas fa-shopping-cart"></i> (@count)
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -62,7 +80,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
-    
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
