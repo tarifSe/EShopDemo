@@ -4,6 +4,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using EShopDemo.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor contextAccessor
+@{
+    List<Products> products = contextAccessor.HttpContext.Session.Get<List<Products>>("products");
+    Products product = null;
+    if (products != null)
+    {
+        product = products.FirstOrDefault(c => c.Id == Model.Id);
+    }
+}
 
 
 <div class="row p-4 rounded border">
@@ -47,12 +58,19 @@
             <div class="row form-group">
                 <div class="col-sm-4 ">
                 </div>
-                <div class="col-sm-3">
-                    <input type="submit" value="Add To Card" class="btn btn-primary form-control" />
+                <div class="col-sm-8">
+                    @if (product != null)
+                    {
+                        <button type="submit" class="btn btn-danger form-control" asp-action="Remove" asp-route-id="@Model.Id">Remove From Cart</button>
+                    }
+                    else
+                    {
+                        <input type="submit" value="Add To Cart" class="btn btn-primary form-control" />
+                    }
                 </div>
-                <div class="col-sm-5">
-                    <a asp-action="Index" class="btn btn-info form-control">Back To List</a>
-                </div>
+            </div>
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-info">Back To List</a>
             </div>
         </form>
     </div>
