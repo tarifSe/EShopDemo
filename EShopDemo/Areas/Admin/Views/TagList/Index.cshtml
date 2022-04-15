@@ -23,6 +23,7 @@
                     @Html.DisplayNameFor(model => model.TagName)
                 </th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,10 +34,7 @@
                         @Html.DisplayFor(modelItem => item.TagName)
                     </td>
                     <td class="">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success"><i class="fa fa-list"></i></a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
-                        @*<partial name="_ButtonPartial" model="@item.Id" />*@
+                        <partial name="_ButtonPartial" model="@item.Id" />
                     </td>
                 </tr>
             }
