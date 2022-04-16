@@ -1,0 +1,52 @@
+﻿@model IEnumerable<EShopDemo.Models.Products>
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h1 class="alert alert-danger">Your Cart Details</h1>
+
+<table class="table table-bordered">
+    <thead class="bg-info">
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Product Type</th>
+            <th>Color</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/@product.Image" style="width:200px; height:150px;" />
+                </td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.ProductTypes.ProductType</td>
+                <td>@product.ProductColor</td>
+                <td>
+                    <a asp-action="Remove" asp-area="Customer" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-danger">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-6">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Back To Home</a>
+    </div>
+    <div class="col-6 text-right">
+        <h3>Total Amount</h3>
+        <h3>Grand Total: @Model.Sum(c=>c.Price)</h3>
+        <a asp-action="" asp-controller="" class="btn btn-warning">Process to Checkout</a>
+    </div>
+</div>
+

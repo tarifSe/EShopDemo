@@ -86,6 +86,15 @@ namespace EShopDemo.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Cart()
+        {
+            List<Products> products = HttpContext.Session.Get<List<Products>>("products");
+            if (products == null)
+            {
+                products = new List<Products>();
+            }
+            return View(products);
+        }
 
 
 
