@@ -7,37 +7,41 @@
 <br />
 <h1 class="alert alert-danger">Your Cart Details</h1>
 
-<table class="table table-bordered">
-    <thead class="bg-info">
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Product Type</th>
-            <th>Color</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
-        {
+<form asp-action="Remove">
+    <table class="table table-bordered">
+        <thead class="bg-info">
             <tr>
-                <td>
-                    <img src="~/@product.Image" style="width:200px; height:150px;" />
-                </td>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.ProductTypes.ProductType</td>
-                <td>@product.ProductColor</td>
-                <td>
-                    <a asp-action="Remove" asp-area="Customer" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-danger">
-                        <i class="fa-regular fa-trash-can"></i>
-                    </a>
-                </td>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Product Type</th>
+                <th>Color</th>
+                <th>Action</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/@product.Image" style="width:200px; height:150px;" />
+                    </td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.ProductTypes.ProductType</td>
+                    <td>@product.ProductColor</td>
+                    <td>
+                        @*<a asp-action="Remove" asp-area="Customer" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-danger">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </a>*@
+                        <button type="submit" class="btn btn-danger" asp-action="Remove" asp-route-id="@product.Id"><i class="fa-regular fa-trash-can"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
 
 <div class="row">
     <div class="col-6">
