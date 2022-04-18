@@ -19,18 +19,18 @@
 <br />
 <h1 class="text-info">Order Details</h1>
 
-<div class="row p-4 rounded border">
-    <div class="col-md-5">
-        <form asp-action="" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<input type="hidden" asp-for="Id" />*@
 
+<form asp-action="" enctype="multipart/form-data">
+    <div class="row p-4 rounded border">
+        <div class="col-md-5">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row form-group">
                 <div class="col-md-4">
                     <label asp-for="Name" class="control-label"></label>
                 </div>
                 <div class="col-md-8">
                     <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-group">
@@ -39,6 +39,7 @@
                 </div>
                 <div class="col-md-8">
                     <input asp-for="PhoneNo" class="form-control" />
+                    <span asp-validation-for="PhoneNo" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-group">
@@ -47,6 +48,7 @@
                 </div>
                 <div class="col-md-8">
                     <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-group">
@@ -55,6 +57,7 @@
                 </div>
                 <div class="col-md-8">
                     <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
             <div class="row form-group">
@@ -70,29 +73,41 @@
                 @*<input type="submit" value="Delete" class="btn btn-danger" />
                     <a asp-action="Index" class="btn btn-info">Cancel</a>*@
             </div>
-        </form>
-    </div>
-    <div class="col-md-7">
-        <table class="table table-bordered">
-            <thead class="bg-danger">
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var product in products)
-                {
+        </div>
+        <div class="col-md-7">
+            <table class="table table-bordered">
+                <thead class="bg-danger">
                     <tr>
-                        <td>
-                            <img src="~/@product.Image" style="width:100px; height:60px;" />
-                        </td>
-                        <td>@product.Name</td>
-                        <td>@product.Price</td>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var product in products)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/@product.Image" style="width:150px; height:100px;" />
+                            </td>
+                            <td>@product.Name</td>
+                            <td>@product.Price</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="text-right">
+                <h3>Grand Total: @products.Sum(c => c.Price)</h3>
+                <input type="submit" value="Place Order" class="btn btn-outline-success" />
+            </div>
+        </div>
     </div>
-</div>
+</form>
+
+
+
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
