@@ -43,7 +43,7 @@ namespace EShopDemo.Areas.Customer.Controllers
             anOrder.OrderNo = GetOrderNo();
             _context.Orders.Add(anOrder);
             await _context.SaveChangesAsync();
-            HttpContext.Session.Set("products", null);
+            HttpContext.Session.Set("products", new List<Products>());
             return View();
         }
 
