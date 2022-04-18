@@ -50,7 +50,7 @@
     <div class="col-6 text-right">
         <h3>Total Amount</h3>
         <h3>Grand Total: @Model.Sum(c=>c.Price)</h3>
-        <a asp-action="" asp-controller="" class="btn btn-warning">Process to Checkout</a>
+        <a asp-action="Checkout" asp-area="Customer" asp-controller="Order" class="btn btn-warning">Process to Checkout</a>
     </div>
 </div>
 

@@ -1,0 +1,98 @@
+﻿@model EShopDemo.Models.Order
+@using EShopDemo.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor contextAccessor
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    List<Products> products = contextAccessor.HttpContext.Session.Get<List<Products>>("products");
+    if (products == null)
+    {
+        products = new List<Products>();
+    }
+}
+
+<br />
+<h1 class="text-info">Order Details</h1>
+
+<div class="row p-4 rounded border">
+    <div class="col-md-5">
+        <form asp-action="" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<input type="hidden" asp-for="Id" />*@
+
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="Name" class="control-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="Name" class="form-control" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="PhoneNo" class="control-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="PhoneNo" class="form-control" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="Address" class="control-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="Address" class="form-control" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="Email" class="control-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="Email" class="form-control" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label asp-for="OrderDate" class="control-label"></label>
+                </div>
+                <div class="col-md-8">
+                    <input asp-for="OrderDate" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @*<input type="submit" value="Delete" class="btn btn-danger" />
+                    <a asp-action="Index" class="btn btn-info">Cancel</a>*@
+            </div>
+        </form>
+    </div>
+    <div class="col-md-7">
+        <table class="table table-bordered">
+            <thead class="bg-danger">
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in products)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/@product.Image" style="width:100px; height:60px;" />
+                        </td>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

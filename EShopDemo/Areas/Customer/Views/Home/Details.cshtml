@@ -1,12 +1,14 @@
 ﻿@model EShopDemo.Models.Products
+@using EShopDemo.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor contextAccessor
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using EShopDemo.Utility
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor contextAccessor
+
 @{
     List<Products> products = contextAccessor.HttpContext.Session.Get<List<Products>>("products");
     Products product = null;
