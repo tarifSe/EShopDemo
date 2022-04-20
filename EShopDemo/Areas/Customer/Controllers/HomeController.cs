@@ -31,7 +31,7 @@ namespace EShopDemo.Controllers
         {
             var products = _context.Products.Include(c => c.ProductTypes).Include(c => c.SpecialTag).ToList();
 
-            const int pageSize = 10;
+            const int pageSize = 6;
             if (pg < 1)
             {
                 pg = 1;
