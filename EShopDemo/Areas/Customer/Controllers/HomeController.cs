@@ -27,10 +27,26 @@ namespace EShopDemo.Controllers
         //    _logger = logger;
         //}
 
-        public IActionResult Index()
+        public IActionResult Index(int pg=1)
         {
             var products = _context.Products.Include(c => c.ProductTypes).Include(c => c.SpecialTag).ToList();
-            return View(products);
+
+            const int pageSize = 10;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+
+            int rowCount = products.Count();
+            var pager = new Pager(rowCount, pg, pageSize);
+
+            int rowSkip = (pg - 1) * pageSize;
+
+            var data = products.Skip(rowSkip).Take(pager.PageSize).ToList();
+            ViewBag.Pager = pager;
+
+            //return View(products);
+            return View(data);
         }
 
         public IActionResult Details(int? id)

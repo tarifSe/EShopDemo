@@ -14,7 +14,10 @@ namespace EShopDemo.Models
         public int EndPage { get; private set; }
         public int TotalPages { get; private set; }
 
-        public Pager(){}
+        public Pager()
+        {
+        }
+
         public Pager(int totalItems, int page, int pageSize = 10)
         {
             int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
