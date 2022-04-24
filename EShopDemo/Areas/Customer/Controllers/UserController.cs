@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EShopDemo.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class UserController : Controller
     {
         public IActionResult Index()
