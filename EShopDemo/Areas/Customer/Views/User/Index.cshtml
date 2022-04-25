@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>User Index</h1>
+
+
+
+
+@section Scripts{
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var message = '@TempData["doneMessage"]';
+            if (message != null) {
+                alertify.success(message);
+            }
+        });
+    </script>
+}

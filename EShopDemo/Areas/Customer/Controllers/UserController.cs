@@ -24,22 +24,26 @@ namespace EShopDemo.Areas.Customer.Controllers
 
         public async Task<IActionResult> Create()
         {
-
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(ApplicationUser appUser)
         {
-            var result = await _userManager.CreateAsync(appUser);
-            if (result.Succeeded)
+            if (ModelState.IsValid)
             {
-
+                var result = await _userManager.CreateAsync(appUser, appUser.PasswordHash);
+                if (result.Succeeded)
+                {
+                    TempData["doneMessage"] = "User has been created";
+                    return RedirectToAction(nameof(Index));
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+            
             return View();
         }
     }
