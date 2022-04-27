@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EShopDemo.Models;
 using Microsoft.AspNetCore.Identity;
+using EShopDemo.Data;
 
 namespace EShopDemo.Areas.Customer.Controllers
 {
@@ -12,14 +13,17 @@ namespace EShopDemo.Areas.Customer.Controllers
     public class UserController : Controller
     {
         UserManager<IdentityUser> _userManager;
-        public UserController(UserManager<IdentityUser> userManager)
+        private readonly ApplicationDbContext _context;
+        public UserController(UserManager<IdentityUser> userManager, ApplicationDbContext applicationDbContext)
         {
             _userManager = userManager;
+            _context = applicationDbContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var userList = _context.ApplicationUsers.ToList();
+            return View(userList);
         }
 
         public async Task<IActionResult> Create()

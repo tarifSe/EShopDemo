@@ -33,8 +33,8 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary btn-block" />
-                @*<a asp-action="Index" class="btn btn-primary">Back to List</a>*@
+                <input type="submit" value="Add" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-info">Back to List</a>
             </div>
         </form>
     </div>
@@ -55,11 +55,19 @@
                 },
                 PasswordHash: {
                     required: true
+                },
+                FirstName: {
+                    required: true
+                },
+                LastName: {
+                    required: true
                 }
             },
             messages: {
                 UserName: "Please enter user name",
-                PasswordHash: "Please enter password"
+                PasswordHash: "Please enter password",
+                FirstName: "Please enter the first name",
+                LastName: "Please enter the last name"
             }
         });
     });
