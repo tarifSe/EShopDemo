@@ -36,6 +36,7 @@ namespace EShopDemo.Areas.Customer.Controllers
         {
             if (ModelState.IsValid)
             {
+                //appUser.Email = appUser.UserName;
                 var result = await _userManager.CreateAsync(appUser, appUser.PasswordHash);
                 if (result.Succeeded)
                 {
@@ -47,8 +48,77 @@ namespace EShopDemo.Areas.Customer.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            
+
             return View();
+        }
+
+        public IActionResult Edit(string id)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user != null)
+            {
+                return View(user);
+            }
+            else return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ApplicationUser user)
+        {
+            var userInfo = _context.ApplicationUsers.FirstOrDefault(c => c.Id == user.Id);
+            if (userInfo != null)
+            {
+                userInfo.FirstName = user.FirstName;
+                userInfo.LastName = user.LastName;
+
+                var result = await _userManager.UpdateAsync(userInfo);
+                if (result.Succeeded)
+                {
+                    TempData["doneMessage"] = "User has been Updated";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            else return NotFound();
+
+            return View(userInfo);
+        }
+
+        public IActionResult Details(string id)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user != null)
+            {
+                return View(user);
+            }
+            else return NotFound();
+        }
+
+        public IActionResult Lockout(string id)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user != null)
+            {
+                return View(user);
+            }
+            else return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Lockout(ApplicationUser applicationUser)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == applicationUser.Id);
+            if (user != null)
+            {
+                user.LockoutEnd = DateTime.Now.AddYears(5);
+                //int isExecuted = await _context.SaveChangesAsync();
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    TempData["doneMessage"] = "User has been LOCKED OUT!";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            else return NotFound();
+            return View(user);
         }
     }
 }

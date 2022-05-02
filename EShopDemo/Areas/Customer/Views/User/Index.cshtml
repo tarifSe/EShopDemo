@@ -30,7 +30,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.FirstName</td>
+                <td>@item.FirstName @item.LastName</td>
                 <td>@item.UserName</td>
                 <td>
                     <partial name="_ButtonPartial2" model="@item.Id" />
