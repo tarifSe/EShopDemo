@@ -24,6 +24,7 @@
             <th>
                 @Html.DisplayNameFor(c => c.UserName)
             </th>
+            <th>Status</th>
             <th></th>
             <th></th>
         </tr>
@@ -32,6 +33,14 @@
             <tr>
                 <td>@item.FirstName @item.LastName</td>
                 <td>@item.UserName</td>
+                @if (item.LockoutEnd > DateTime.Now && item.LockoutEnd != null)
+                {
+                    <td>Inactive</td>
+                }
+                else
+                {
+                    <td>Active</td>
+                }
                 <td>
                     <partial name="_ButtonPartial2" model="@item.Id" />
                 </td>
