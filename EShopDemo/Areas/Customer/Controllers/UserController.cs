@@ -120,5 +120,56 @@ namespace EShopDemo.Areas.Customer.Controllers
             else return NotFound();
             return View(user);
         }
+
+        public IActionResult Active(string id)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Active(ApplicationUser applicationUser)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == applicationUser.Id);
+            if (user != null)
+            {
+                user.LockoutEnd = null;
+                //int isExecuted = await _context.SaveChangesAsync();
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    TempData["doneMessage"] = "User has been ACTIVATED";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            else return NotFound();
+            return View(user);
+        }
+
+        public IActionResult Delete(string id)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(ApplicationUser applicationUser)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == applicationUser.Id);
+            if (user != null)
+            {
+                _context.ApplicationUsers.Remove(user);
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    TempData["doneMessage"] = "User has been Deleted!";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            else return NotFound();
+            return View(user);
+        }
     }
 }

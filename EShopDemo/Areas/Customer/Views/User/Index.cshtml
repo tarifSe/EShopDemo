@@ -19,7 +19,7 @@
     <table class="table table-striped border">
         <tr class="table-info">
             <th>
-                @Html.DisplayNameFor(c => c.FirstName)
+                Name
             </th>
             <th>
                 @Html.DisplayNameFor(c => c.UserName)
@@ -30,21 +30,28 @@
         </tr>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.FirstName @item.LastName</td>
-                <td>@item.UserName</td>
-                @if (item.LockoutEnd > DateTime.Now && item.LockoutEnd != null)
-                {
-                    <td>Inactive</td>
-                }
-                else
-                {
-                    <td>Active</td>
-                }
-                <td>
-                    <partial name="_ButtonPartial2" model="@item.Id" />
-                </td>
-            </tr>
+    <tr>
+        <td>@item.FirstName @item.LastName</td>
+        <td>@item.UserName</td>
+        @if (item.LockoutEnd > DateTime.Now && item.LockoutEnd != null)
+        {
+            <td>Inactive</td>
+            <td style="width:150px">
+                <div class="btn-group">
+                    <a asp-action="Active" class="btn btn-warning" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can"></i></a>
+                </div>
+            </td>
+        }
+        else
+        {
+            <td>Active</td>
+            <td>
+                <partial name="_ButtonPartial2" model="@item.Id" />
+            </td>
+        }
+
+    </tr>
         }
     </table>
 </div>
