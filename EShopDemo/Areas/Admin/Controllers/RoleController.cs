@@ -17,6 +17,8 @@ namespace EShopDemo.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
+            var roles = _roleManager.Roles.ToList();
+            ViewBag.Roles = roles;
             return View();
         }
     }
