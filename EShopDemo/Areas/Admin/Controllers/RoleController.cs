@@ -44,7 +44,45 @@ namespace EShopDemo.Areas.Admin.Controllers
             var result = await _roleManager.CreateAsync(iRole);
             if (result.Succeeded)
             {
-                TempData["doneMessage"] = "User has been created";
+                TempData["succssesMessage"] = "Role has been created";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            ViewBag.id = role.Id;
+            ViewBag.name = role.Name;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, string name)
+        {
+            var role = await _roleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            role.Name = name;
+            var isExist = await _roleManager.RoleExistsAsync(name);
+            if (isExist)
+            {
+                ViewBag.msg = "This role is already exist!";
+                ViewBag.id = role.Id;
+                ViewBag.name = name;
+                return View();
+            }
+            var result = await _roleManager.UpdateAsync(role);
+            if (result.Succeeded)
+            {
+                TempData["succssesMessage"] = "Role has been Updated";
                 return RedirectToAction(nameof(Index));
             }
             return View();
