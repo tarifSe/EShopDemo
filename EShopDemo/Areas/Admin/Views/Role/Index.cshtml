@@ -23,16 +23,17 @@
                 Name
             </th>
             <th></th>
+            <th></th>
         </tr>
         @foreach (var item in ViewBag.Roles)
         {
             <tr>
                 <td>@item.Name</td>
                 <td>
-                    <partial name="_ButtonPartial" model="@item.Id" />
+                    <partial name="_ButtonPartial2" model="@item.Id" />
                 </td>
             </tr>
-        }
+         }
     </table>
 </div>
 

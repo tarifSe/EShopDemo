@@ -10,8 +10,8 @@ namespace EShopDemo.Areas.Admin.Controllers
     [Area("Admin")]
     public class RoleController : Controller
     {
-        RoleManager<IdentityUser> _roleManager;
-        public RoleController(RoleManager<IdentityUser> roleManager)
+        RoleManager<IdentityRole> _roleManager;
+        public RoleController(RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
         }
@@ -19,6 +19,27 @@ namespace EShopDemo.Areas.Admin.Controllers
         {
             var roles = _roleManager.Roles.ToList();
             ViewBag.Roles = roles;
+            return View();
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string name)
+        {
+            IdentityRole iRole = new IdentityRole()
+            {
+                Name = name
+            };
+            var result = await _roleManager.CreateAsync(iRole);
+            if (result.Succeeded)
+            {
+                TempData["doneMessage"] = "User has been created";
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
     }
