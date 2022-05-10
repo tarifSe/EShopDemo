@@ -34,6 +34,13 @@ namespace EShopDemo.Areas.Admin.Controllers
             {
                 Name = name
             };
+            var isExist = await _roleManager.RoleExistsAsync(name);
+            if (isExist)
+            {
+                ViewBag.msg = "This role is already exist!";
+                ViewBag.name = name;
+                return View();
+            }
             var result = await _roleManager.CreateAsync(iRole);
             if (result.Succeeded)
             {
