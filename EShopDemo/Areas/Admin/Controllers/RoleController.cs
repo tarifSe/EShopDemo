@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using EShopDemo.Data;
+using EShopDemo.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +14,11 @@ namespace EShopDemo.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
-        public RoleController(RoleManager<IdentityRole> roleManager)
+        ApplicationDbContext _context;
+        public RoleController(RoleManager<IdentityRole> roleManager, ApplicationDbContext applicationDbContext)
         {
             _roleManager = roleManager;
+            _context = applicationDbContext;
         }
         public IActionResult Index()
         {
@@ -113,9 +118,16 @@ namespace EShopDemo.Areas.Admin.Controllers
             var result = await _roleManager.DeleteAsync(role);
             if (result.Succeeded)
             {
-                TempData["succssesMessage"] = "Role has been Deleted";
+                TempData["DeleteMessage"] = "Role has been Deleted";
                 return RedirectToAction(nameof(Index));
             }
+            return View();
+        }
+
+        public IActionResult Assign()
+        {
+            ViewData["UserId"] = new SelectList(_context.ApplicationUsers.ToList(), "Id", "UserName");
+            ViewData["RoleId"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
             return View();
         }
     }

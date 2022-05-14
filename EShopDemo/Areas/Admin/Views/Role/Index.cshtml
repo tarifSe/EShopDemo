@@ -51,6 +51,11 @@
             if (message != '') {
                 alertify.success(message);
             }
+
+            var message = '@TempData["DeleteMessage"]';
+            if (message != '') {
+                alertify.error(message);
+            }
         });
     </script>
 }
