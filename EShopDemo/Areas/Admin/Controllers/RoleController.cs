@@ -139,7 +139,6 @@ namespace EShopDemo.Areas.Admin.Controllers
         {
             var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == roleUser.UserId);
 
-            var isExit = await _userManager.IsInRoleAsync(user, roleUser.RoleId);
             if (await _userManager.IsInRoleAsync(user, roleUser.RoleId))
             {
                 ViewBag.msg = "This role '" + roleUser.RoleId + "' is already exist!";
