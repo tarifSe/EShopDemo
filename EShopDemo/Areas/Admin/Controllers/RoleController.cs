@@ -1,4 +1,5 @@
-﻿using EShopDemo.Data;
+﻿using EShopDemo.Areas.Admin.ViewModels;
+using EShopDemo.Data;
 using EShopDemo.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,13 @@ namespace EShopDemo.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
+        UserManager<IdentityUser> _userManager;
         ApplicationDbContext _context;
-        public RoleController(RoleManager<IdentityRole> roleManager, ApplicationDbContext applicationDbContext)
+        public RoleController(RoleManager<IdentityRole> roleManager, ApplicationDbContext applicationDbContext, UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
             _context = applicationDbContext;
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -127,7 +130,30 @@ namespace EShopDemo.Areas.Admin.Controllers
         public IActionResult Assign()
         {
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers.ToList(), "Id", "UserName");
-            ViewData["RoleId"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+            ViewData["RoleId"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Assign(RoleUserVM roleUser)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(c => c.Id == roleUser.UserId);
+
+            var isExit = await _userManager.IsInRoleAsync(user, roleUser.RoleId);
+            if (await _userManager.IsInRoleAsync(user, roleUser.RoleId))
+            {
+                ViewBag.msg = "This role '" + roleUser.RoleId + "' is already exist!";
+                ViewData["UserId"] = new SelectList(_context.ApplicationUsers.ToList(), "Id", "UserName");
+                ViewData["RoleId"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
+                return View();
+            }
+
+            var role = await _userManager.AddToRoleAsync(user, roleUser.RoleId);
+            if (role.Succeeded)
+            {
+                TempData["succssesMessage"] = "Role has been Assined";
+                return RedirectToAction(nameof(Index));
+            }
             return View();
         }
     }

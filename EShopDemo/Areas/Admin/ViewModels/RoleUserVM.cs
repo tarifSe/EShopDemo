@@ -10,9 +10,10 @@ namespace EShopDemo.Areas.Admin.ViewModels
     {
         [Required]
         [Display(Name ="User")]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+
         [Required]
         [Display(Name ="Role")]
-        public int RoleId { get; set; }
+        public string RoleId { get; set; }
     }
 }
