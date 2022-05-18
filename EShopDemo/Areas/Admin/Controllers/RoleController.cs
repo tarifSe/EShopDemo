@@ -129,7 +129,7 @@ namespace EShopDemo.Areas.Admin.Controllers
 
         public IActionResult Assign()
         {
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers.ToList(), "Id", "UserName");
+            ViewData["UserId"] = new SelectList(_context.ApplicationUsers.Where(c => c.LockoutEnd < DateTime.Now || c.LockoutEnd == null).ToList(), "Id", "UserName");
             ViewData["RoleId"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
             return View();
         }
@@ -141,8 +141,8 @@ namespace EShopDemo.Areas.Admin.Controllers
 
             if (await _userManager.IsInRoleAsync(user, roleUser.RoleId))
             {
-                ViewBag.msg = "This role '" + roleUser.RoleId + "' is already exist!";
-                ViewData["UserId"] = new SelectList(_context.ApplicationUsers.ToList(), "Id", "UserName");
+                ViewBag.msg = "This role '" + roleUser.RoleId + "' is already Assigned!";
+                ViewData["UserId"] = new SelectList(_context.ApplicationUsers.Where(c => c.LockoutEnd < DateTime.Now || c.LockoutEnd == null).ToList(), "Id", "UserName");
                 ViewData["RoleId"] = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
                 return View();
             }
