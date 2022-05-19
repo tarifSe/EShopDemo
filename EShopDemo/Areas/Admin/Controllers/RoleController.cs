@@ -155,5 +155,21 @@ namespace EShopDemo.Areas.Admin.Controllers
             }
             return View();
         }
+
+        public IActionResult AssignedUserRole()
+        {
+            var result = from ur in _context.UserRoles
+                         join r in _context.Roles on ur.RoleId equals r.Id
+                         join a in _context.ApplicationUsers on ur.UserId equals a.Id
+                         select new UserRoleMappingVM()
+                         {
+                             UserId = ur.UserId,
+                             RoleId = ur.RoleId,
+                             UserName = a.UserName,
+                             RoleName = r.Name
+                         };
+            ViewBag.RolesUser = result;
+            return View();
+        }
     }
 }
