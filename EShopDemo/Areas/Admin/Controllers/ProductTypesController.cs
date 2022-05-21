@@ -1,5 +1,6 @@
 ﻿using EShopDemo.Data;
 using EShopDemo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace EShopDemo.Areas.Admin.Controllers
             return View(_context.ProductTypes.ToList());
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -41,6 +43,7 @@ namespace EShopDemo.Areas.Admin.Controllers
             return View(productTypes);
         }
 
+        [Authorize]
         public IActionResult Edit(int? id)
         {
             if (id==null)

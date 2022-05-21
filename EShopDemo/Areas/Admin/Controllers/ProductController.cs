@@ -1,5 +1,6 @@
 ﻿using EShopDemo.Data;
 using EShopDemo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,7 @@ namespace EShopDemo.Areas.Admin.Controllers
             return View(products);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["ProductTypesId"] = new SelectList(_context.ProductTypes.ToList(), "Id", "ProductType");

@@ -161,6 +161,8 @@ namespace EShopDemo.Areas.Admin.Controllers
             var result = from ur in _context.UserRoles
                          join r in _context.Roles on ur.RoleId equals r.Id
                          join a in _context.ApplicationUsers on ur.UserId equals a.Id
+                         //select new { UserId = ur.UserId, RoleId = ur.RoleId, UserName = a.UserName, RoleName = r.Name };   
+                         ///<-- Anonymous Type object.
                          select new UserRoleMappingVM()
                          {
                              UserId = ur.UserId,
