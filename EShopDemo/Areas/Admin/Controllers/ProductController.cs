@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace EShopDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,6 +26,7 @@ namespace EShopDemo.Areas.Admin.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             bool onOff = true;
@@ -52,7 +54,6 @@ namespace EShopDemo.Areas.Admin.Controllers
             return View(products);
         }
 
-        [Authorize]
         public IActionResult Create()
         {
             ViewData["ProductTypesId"] = new SelectList(_context.ProductTypes.ToList(), "Id", "ProductType");

@@ -26,7 +26,7 @@ namespace EShopDemo.Areas.Customer.Controllers
             return View(userList);
         }
 
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -40,6 +40,7 @@ namespace EShopDemo.Areas.Customer.Controllers
                 var result = await _userManager.CreateAsync(appUser, appUser.PasswordHash);
                 if (result.Succeeded)
                 {
+                    var isSaveRole = await _userManager.AddToRoleAsync(appUser, "User");
                     TempData["doneMessage"] = "User has been created";
                     return RedirectToAction(nameof(Index));
                 }
