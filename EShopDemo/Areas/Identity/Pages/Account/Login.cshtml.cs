@@ -85,10 +85,9 @@ namespace EShopDemo.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var user = _context.ApplicationUsers.FirstOrDefault(c => c.UserName.ToLower() == Input.Email.ToLower());
-                    var roleUser = (from ur in _context.UserRoles
-                                    join r in _context.Roles on ur.RoleId equals r.Id
-                                    where ur.UserId == user.Id
+                    var userInfo = _context.ApplicationUsers.FirstOrDefault(c => c.UserName.ToLower() == Input.Email.ToLower());
+                    var roleUser = (from ur in _context.UserRoles join r in _context.Roles on ur.RoleId equals r.Id 
+                                    where ur.UserId == userInfo.Id
                                     select new SessionUserVM()
                                     {
                                         UserName = Input.Email,
