@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace EShopDemo.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    //[Authorize]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +26,7 @@ namespace EShopDemo.Areas.Admin.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public IActionResult Index()
         {
             bool onOff = true;
@@ -135,6 +135,7 @@ namespace EShopDemo.Areas.Admin.Controllers
             return View(product);
         }
 
+        //[AllowAnonymous]
         public IActionResult Details(int? id)
         {
             if (id == null)

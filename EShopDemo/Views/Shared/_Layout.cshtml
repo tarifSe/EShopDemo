@@ -3,6 +3,7 @@
 @inject IHttpContextAccessor contextAccessor
 @{ 
     int count = 0;
+    var roleName = contextAccessor.HttpContext.Session.GetString("roleName");
     List<Products> products = contextAccessor.HttpContext.Session.Get<List<Products>>("products");
     if (products == null)
     {
