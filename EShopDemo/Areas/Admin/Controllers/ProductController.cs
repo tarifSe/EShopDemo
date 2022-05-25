@@ -117,6 +117,14 @@ namespace EShopDemo.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var searchProduct = _context.Products.FirstOrDefault(c => c.Name == product.Name);
+                if (searchProduct != null)
+                {
+                    ViewBag.message = "This product is already exist";
+                    ViewData["ProductTypesId"] = new SelectList(_context.ProductTypes.ToList(), "Id", "ProductType");
+                    ViewData["SpecialTagId"] = new SelectList(_context.TagLists.ToList(), "Id", "TagName");
+                    return View(product);
+                }
                 if (image != null)
                 {
                     var name = Path.Combine(_hostingEnvironment.WebRootPath + "/Images", Path.GetFileName(image.FileName));
