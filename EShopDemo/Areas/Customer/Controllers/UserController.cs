@@ -43,7 +43,7 @@ namespace EShopDemo.Areas.Customer.Controllers
                 var result = await _userManager.CreateAsync(appUser, appUser.PasswordHash);
                 if (result.Succeeded)
                 {
-                    var isSaveRole = await _userManager.AddToRoleAsync(appUser, "User");
+                    //var isSaveRole = await _userManager.AddToRoleAsync(appUser, "User");
                     TempData["doneMessage"] = "User has been created";
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
