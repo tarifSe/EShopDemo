@@ -23,7 +23,7 @@ namespace EShopDemo.Areas.Admin.Controllers
             return View(_context.ProductTypes.ToList());
         }
 
-        //[Authorize]
+        [Authorize]
         public IActionResult Create()
         {
             return View();

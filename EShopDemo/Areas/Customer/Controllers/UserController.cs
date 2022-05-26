@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using EShopDemo.Models;
 using Microsoft.AspNetCore.Identity;
 using EShopDemo.Data;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace EShopDemo.Areas.Customer.Controllers
 {
@@ -36,12 +39,16 @@ namespace EShopDemo.Areas.Customer.Controllers
         {
             if (ModelState.IsValid)
             {
-                //appUser.Email = appUser.UserName;
+                appUser.Email = appUser.UserName;
                 var result = await _userManager.CreateAsync(appUser, appUser.PasswordHash);
                 if (result.Succeeded)
                 {
                     var isSaveRole = await _userManager.AddToRoleAsync(appUser, "User");
                     TempData["doneMessage"] = "User has been created";
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+                    var abc = await _userManager.ConfirmEmailAsync(appUser, code);
+
                     return RedirectToAction(nameof(Index));
                 }
                 foreach (var error in result.Errors)
