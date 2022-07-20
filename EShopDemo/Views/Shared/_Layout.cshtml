@@ -49,8 +49,8 @@
                         @*<li class="nav-item">
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
         </li>*@
-                        @if (roleName == "Super User")
-                        {
+                        @*@if (roleName == "Super User")
+                        {*@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">Product Type</a>
                             </li>
@@ -60,7 +60,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
                             </li>
-                        }
+                        @*}*@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Cart">
                                 <i class="fas fa-shopping-cart"></i> (@count)
