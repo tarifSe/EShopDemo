@@ -84,9 +84,17 @@ namespace EShopDemo.Controllers
             {
                 products = new List<Products>();
             }
-            products.Add(product);
-            HttpContext.Session.Set("products", products);
-            return RedirectToAction(nameof(Index));
+            if (product.IsAvailable)
+            {
+                products.Add(product);
+                HttpContext.Session.Set("products", products);
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["failMsg"] = "This product is not available!";
+                return RedirectToAction(nameof(Details));
+            }
         }
 
         [HttpPost]
