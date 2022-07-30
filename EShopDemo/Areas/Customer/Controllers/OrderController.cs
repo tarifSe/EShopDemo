@@ -41,9 +41,17 @@ namespace EShopDemo.Areas.Customer.Controllers
                 }
             }
             anOrder.OrderNo = GetOrderNo();
-            _context.Orders.Add(anOrder);
-            await _context.SaveChangesAsync();
-            HttpContext.Session.Set("products", new List<Products>());
+            if (anOrder.OrderDetails.Count > 0)
+            {
+                _context.Orders.Add(anOrder);
+                await _context.SaveChangesAsync();
+                ViewBag.SuccessMsg = "Order successfully done.";
+                HttpContext.Session.Set("products", new List<Products>());
+            }
+            else
+            {
+                ViewBag.FailedMsg = "Please, add products to Cart first!";
+            }
             return View();
         }
 

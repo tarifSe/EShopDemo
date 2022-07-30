@@ -32,8 +32,8 @@
                     <td>@product.ProductColor</td>
                     <td>
                         @*<a asp-action="Remove" asp-area="Customer" asp-controller="Home" asp-route-id="@product.Id" class="btn btn-danger">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </a>*@
+                                <i class="fa-regular fa-trash-can"></i>
+                            </a>*@
                         <button type="submit" class="btn btn-danger" asp-action="Remove" asp-route-id="@product.Id"><i class="fa-regular fa-trash-can"></i></button>
                     </td>
                 </tr>
@@ -48,9 +48,8 @@
         <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Back To Home</a>
     </div>
     <div class="col-6 text-right">
-        <h3>Total Amount</h3>
-        <h3>Grand Total: @Model.Sum(c=>c.Price)</h3>
-        <a asp-action="Checkout" asp-area="Customer" asp-controller="Order" class="btn btn-warning">Process to Checkout</a>
+        <h3>Grand Total: @Model.Sum(c => c.Price) Tk</h3>
+        <a asp-action="Checkout" asp-area="Customer" asp-controller="Order" class="btn btn-success">Process to Checkout</a>
     </div>
 </div>
 

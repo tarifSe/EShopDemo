@@ -18,7 +18,43 @@
 
 <br />
 <h1 class="text-info">Order Details</h1>
+@*@if (TempData["SuccessMsg"] != null)
+    {
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <h5><strong>Success! </strong> @TempData["SuccessMsg"]</h5>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <h5>@TempData["FailedMsg"]</h5>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }*@
 
+@if (ViewBag.SuccessMsg != null)
+{
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <h5><strong>Success! </strong> @ViewBag.SuccessMsg</h5>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@if(ViewBag.FailedMsg != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <h5>@ViewBag.FailedMsg</h5>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
 <form asp-action="Checkout" enctype="multipart/form-data">
     <div class="row p-4 rounded border">
@@ -65,7 +101,7 @@
                     <label asp-for="OrderDate" class="control-label">Order Date</label>
                 </div>
                 <div class="col-md-8">
-                    <input asp-for="OrderDate" type="text" class="form-control" readonly="readonly"/>
+                    <input asp-for="OrderDate" type="text" class="form-control" readonly="readonly" />
                 </div>
             </div>
 
@@ -110,7 +146,7 @@
 
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    
+
     <script>
         $(document).ready(function () {
             $('#OrderDate').datepicker({
