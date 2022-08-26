@@ -106,15 +106,39 @@
 @section Scripts{
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script type="text/javascript">
+
         $(document).ready(function () {
             $('#productTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                    'pdf', 'excel', 'print'
-                ]
-
+                    {
+                        extend: 'print',
+                        text: 'Print all',
+                        exportOptions: {
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Print selected'
+                    },
+                    'pdf', 'excel'
+                ],
+                select: true
             });
         });
+
+        //$(document).ready(function () {
+        //    $('#productTable').DataTable({
+        //        dom: 'Bfrtip',
+        //        buttons: [
+        //            'pdf', 'excel', 'print'
+        //        ]
+
+        //    });
+        //});
 
         $(function () {
             var message = '@TempData["successMsg"]';
